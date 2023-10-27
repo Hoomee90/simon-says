@@ -36,20 +36,30 @@ GNU GPLv3
 
 Copyright (c) _date_ _author name(s)_
 
-## Pseudocode Tests Used During Development
+## Pseudocode Tests Used During Development <small><small>(You can't even run these in the console anymore)</small></small>
 All:
 const simon = new SimonGame();
 
-Describe: SimonGame.addColor()
+Describe: SimonGame.prototype.addElement()
 
-Test: "It should add a random number between zero and four to the sequence property"
+Test: "It should add a random number between zero and four to the sequence array"
 Code: 
-simon.addColor();
+simon.addElement();
 console.log(simon.sequence);
 Expected Output: ([0] || [1] || [2] || [3])
 
-Test: "It should add a random of four colors to the sequence property"
+Describe: SimonGame.prototype.display()
+
+Test: "It should return an array of colors based on its sequence array"
+Code:
+simon.sequence = [1, 2, 3];
+console.log(simon.display());
+Expected Output: ['yellow', 'green', 'blue']
+
+Describe: SimonGame.prototype.check(seqEl)
+
+Test: "It should return true if the input is in the sequence array"
 Code: 
-simon.addColor();
-console.log(simon.sequence);
-Expected Output: (['yellow'] || ['green'] || ['blue'] || ['red'])
+simon.sequence = [1, 2];
+console.log(simon.check(1));
+Expected Output: true

@@ -5,8 +5,16 @@ export default class SimonGame {
     this.position = 0;
   }
 
-  addColor() {
-    const options = ["red", "yellow", "green", "blue"];
-    this.sequence.push(options[Math.floor(Math.random() * 4)]);
+  addElement() {
+    this.sequence.push(Math.floor(Math.random() * 4));
+  }
+
+  display() {
+    const colors = ["red", "yellow", "green", "blue"];
+    return this.sequence.map(el => colors[el]);
+  }
+
+  check(seqEl) {
+    return this.sequence.includes(seqEl);
   }
 }
