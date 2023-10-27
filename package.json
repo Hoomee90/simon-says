@@ -1,5 +1,5 @@
 {
-  "name": "shape-tracker",
+  "name": "simon-says",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -23,6 +23,6 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
-    "bootstrap": "5.2.3"
+    "bootstrap": "^5.2.3"
   }
 }
