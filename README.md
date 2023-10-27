@@ -35,3 +35,15 @@ _{Leave nothing to chance! You want it to be easy for potential users, employers
 GNU GPLv3
 
 Copyright (c) _date_ _author name(s)_
+
+## Pseudocode Tests Used During Development
+All:
+const simon = new SimonGame();
+
+Describe: SimonGame.addColor()
+
+Test: "It should add a random number between zero and four to the sequence property"
+Code: 
+simon.addColor();
+console.log(simon.sequence);
+Expected Output: ([0] || [1] || [2] || [3])
