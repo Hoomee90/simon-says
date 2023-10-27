@@ -47,3 +47,9 @@ Code:
 simon.addColor();
 console.log(simon.sequence);
 Expected Output: ([0] || [1] || [2] || [3])
+
+Test: "It should add a random of four colors to the sequence property"
+Code: 
+simon.addColor();
+console.log(simon.sequence);
+Expected Output: (['yellow'] || ['green'] || ['blue'] || ['red'])
