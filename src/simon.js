@@ -14,7 +14,7 @@ export default class SimonGame {
     return this.sequence.map(el => colors[el]);
   }
 
-  check(seqEl) {
-    return this.sequence.includes(seqEl);
+  check(seqEl, index = 0) {
+    return this.sequence[index] === seqEl;
   }
 }

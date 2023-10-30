@@ -63,3 +63,9 @@ Code:
 simon.sequence = [1, 2];
 console.log(simon.check(1));
 Expected Output: true
+
+Test: "It check only at the index of an additional input"
+Code: 
+simon.sequence = [1, 2, 3];
+console.log(simon.check(2, 3));
+Expected Output: false
