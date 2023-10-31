@@ -3,7 +3,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SimonGame from './simon';
 
 window.addEventListener("load", () => {
-  const simon = new SimonGame();
-  simon.sequence = [1, 2];
-  console.log(simon.check(0));
-}) 
+  document.querySelectorAll("input[type='radio']").forEach((el) => {
+    el.addEventListener("click", playerButtonPress);
+  });
+});
+
+function playerButtonPress(e) {
+  simonButtonAction(e.target)
+}
+
+function simonButtonAction(button) {
+  setTimeout(() => button.checked = false, 200);
+}
