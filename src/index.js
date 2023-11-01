@@ -12,6 +12,10 @@ function buttonAction(button) {
   sleep(200).then(() => button.checked = false);
 }
 
+function handleInput(event) {
+
+}
+
 function handleSimonTurn(simonObj) {
   simonObj.addElement();
   simonObj.position = 0;
@@ -20,8 +24,8 @@ function handleSimonTurn(simonObj) {
 }
 
 function handleSimonDisplay(simonObj) {
-  buttonAction(document.querySelector(`#${simonObj.display()[simonObj.position]}`));
-  simonObj.position++;
+  buttonAction(document.querySelector(`#${simonObj.sequence[simonObj.position]}`));
+  simonObj.incrementPosition();
   if (simonObj.position < simonObj.sequence.length) {
     sleep(500).then(() => handleSimonDisplay(simonObj));
   }
