@@ -1,5 +1,4 @@
 export default class SimonGame {
-  
   constructor() {
     this.sequence = [];
     this.position = 0;
@@ -15,6 +14,6 @@ export default class SimonGame {
   }
 
   check(seqEl, index = 0) {
-    return this.sequence[index] === seqEl;
+    return this.display()[index] === seqEl;
   }
 }

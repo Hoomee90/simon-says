@@ -3,17 +3,30 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SimonGame from './simon';
 
 window.addEventListener("load", () => {
-  document.querySelector("button#game-start").addEventListener("click", handleGame);
+  let simon = new SimonGame();
+  document.querySelector("button#game-start").addEventListener("click", ()=> handleSimonTurn(simon));
 });
 
-function simonButtonAction(button) {
-  setTimeout(() => button.checked = false, 200);
+function buttonAction(button) {
+  button.checked = true;
+  sleep(200).then(() => button.checked = false);
 }
 
-function handleGame() {
-  let simon = new SimonGame();
+function handleSimonTurn(simonObj) {
+  simonObj.addElement();
+  simonObj.position = 0;
+  console.log(simonObj.sequence);
+  handleSimonDisplay(simonObj);
+}
 
-  document.querySelector(".btn-group-vertical").addEventListener("click", (e) => {
-      simonButtonAction(e.target)
-  });
+function handleSimonDisplay(simonObj) {
+  buttonAction(document.querySelector(`#${simonObj.display()[simonObj.position]}`));
+  simonObj.position++;
+  if (simonObj.position < simonObj.sequence.length) {
+    sleep(500).then(() => handleSimonDisplay(simonObj));
+  }
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
