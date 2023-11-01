@@ -4,7 +4,8 @@ import SimonGame from './simon';
 
 window.addEventListener("load", () => {
   let simon = new SimonGame();
-  document.querySelector("button#game-start").addEventListener("click", ()=> handleSimonTurn(simon));
+  document.querySelector("button#game-start").addEventListener("click", () => handleSimonTurn(simon));
+  document.querySelectorAll("input[name='simon-btn']").forEach(element => element.addEventListener("click", (event) => handleInput(event, simon)));
 });
 
 function buttonAction(button) {
@@ -12,8 +13,11 @@ function buttonAction(button) {
   sleep(200).then(() => button.checked = false);
 }
 
-function handleInput(event) {
-
+function handleInput(event, simon) {
+  buttonAction(event.target);
+  if (simon.receiveInput(event.target.id)) {
+    console.log("good");
+  }
 }
 
 function handleSimonTurn(simonObj) {
