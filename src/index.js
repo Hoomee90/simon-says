@@ -8,10 +8,7 @@ window.addEventListener("load", () => {
 
 function handleGameInit() {
   let simon = new SimonGame();
-  const gameButtons = document.querySelectorAll("input[name='simon-btn']");
   handleSimonTurn(simon);
-  document.querySelector("#game-buttons").addEventListener("click", (event) => handleInput(event, simon));
-  // gameButtons.forEach(element => element.addEventListener("click", (event) => handleInput(event, simon)));
 }
 
 function buttonAction(button) {
@@ -19,26 +16,41 @@ function buttonAction(button) {
   sleep(200).then(() => button.checked = false);
 }
 
-function handleInput(event, simon) {
+function handleInput(event, simonObj) {
+  let simon = simonObj;
   if (event.target.tagName === "INPUT") {
     buttonAction(event.target);
+    simon.changePosition(true);
     if (simon.receiveInput(event.target.id)) {
       console.log("correct");
+      if (simon.checkInputComplete()) {
+        console.log(`round complete!`);
+        let toRefresh = document.querySelector("#game-buttons")
+        const refreshedNode = toRefresh.cloneNode(true);
+        toRefresh.parentNode.replaceChild(refreshedNode, toRefresh);
+        handleSimonTurn(simon);
+      }
+    } else {
+      console.log("game over");
+      handleGameInit();
     }
   }
 }
 
 function handleSimonTurn(simonObj) {
+  let simon = simonObj;
   simonObj.addElement();
-  simonObj.position = 0;
-  console.log(simonObj.sequence);
-  handleSimonDisplay(simonObj);
+  console.log(simon.sequence);
+  handleSimonDisplay(simon);
+  simon.changePosition(false);
+  document.querySelector("#game-buttons").addEventListener("click", (event) => handleInput(event, simon));
 }
 
 function handleSimonDisplay(simonObj) {
-  buttonAction(document.querySelector(`#${simonObj.sequence[simonObj.position]}`));
-  simonObj.incrementPosition();
-  if (simonObj.position < simonObj.sequence.length) {
+  let simon = simonObj;
+  buttonAction(document.querySelector(`#${simon.sequence[simon.position]}`));
+  simon.changePosition(true);
+  if (simon.position < simon.sequence.length) {
     sleep(500).then(() => handleSimonDisplay(simonObj));
   }
 }
