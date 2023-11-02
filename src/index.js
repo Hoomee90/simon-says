@@ -11,16 +11,17 @@ function handleGameInit() {
   handleSimonTurn(simon);
 }
 
-function buttonAction(button) {
-  button.checked = true;
+function buttonAction(button, isSimon = false) {
+  if (isSimon) {
+    button.checked = true;
+  }
   sleep(200).then(() => button.checked = false);
 }
 
 function handleInput(event, simonObj) {
   let simon = simonObj;
   if (event.target.tagName === "INPUT") {
-    buttonAction(event.target);
-    simon.changePosition(true);
+    buttonAction(event.target, false);
     if (simon.receiveInput(event.target.id)) {
       console.log("correct");
       if (simon.checkInputComplete()) {
@@ -32,26 +33,27 @@ function handleInput(event, simonObj) {
       }
     } else {
       console.log("game over");
-      handleGameInit();
+      let toRefresh = document.querySelector("#game-buttons")
+      const refreshedNode = toRefresh.cloneNode(true);
+      toRefresh.parentNode.replaceChild(refreshedNode, toRefresh);
     }
   }
 }
 
 function handleSimonTurn(simonObj) {
   let simon = simonObj;
-  simonObj.addElement();
+  simon.addElement();
   console.log(simon.sequence);
   handleSimonDisplay(simon);
-  simon.changePosition(false);
   document.querySelector("#game-buttons").addEventListener("click", (event) => handleInput(event, simon));
 }
 
 function handleSimonDisplay(simonObj) {
   let simon = simonObj;
-  buttonAction(document.querySelector(`#${simon.sequence[simon.position]}`));
-  simon.changePosition(true);
+  buttonAction(document.querySelector(`#${simon.sequence[simon.position]}`), true);
+  simon.incrementPosition();
   if (simon.position < simon.sequence.length) {
-    sleep(500).then(() => handleSimonDisplay(simonObj));
+    sleep(500).then(() => handleSimonDisplay(simon));
   }
 }
 

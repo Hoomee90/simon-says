@@ -11,8 +11,9 @@ export default class SimonGame {
   }
   
   receiveInput(input) {
-    this.playerGuesses.push(input);
-    return this.sequence.every((element, index) => element === this.playerGuesses[index]);
+    let guessLength = this.playerGuesses.push(input);
+    return input === this.sequence[guessLength - 1];
+    // every((element, index) => element === this.playerGuesses[index]);
   }
 
   checkInputComplete() {
