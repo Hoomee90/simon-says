@@ -3,10 +3,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SimonGame from './simon';
 
 window.addEventListener("load", () => {
-  let simon = new SimonGame();
-  document.querySelector("button#game-start").addEventListener("click", () => handleSimonTurn(simon));
-  document.querySelectorAll("input[name='simon-btn']").forEach(element => element.addEventListener("click", (event) => handleInput(event, simon)));
+  document.querySelector("button#game-start").addEventListener("click", handleGameInit);
 });
+
+function handleGameInit() {
+  let simon = new SimonGame();
+  const gameButtons = document.querySelectorAll("input[name='simon-btn']");
+  handleSimonTurn(simon);
+  document.querySelector("#game-buttons").addEventListener("click", (event) => handleInput(event, simon));
+  // gameButtons.forEach(element => element.addEventListener("click", (event) => handleInput(event, simon)));
+}
 
 function buttonAction(button) {
   button.checked = true;
@@ -14,9 +20,11 @@ function buttonAction(button) {
 }
 
 function handleInput(event, simon) {
-  buttonAction(event.target);
-  if (simon.receiveInput(event.target.id)) {
-    console.log("good");
+  if (event.target.tagName === "INPUT") {
+    buttonAction(event.target);
+    if (simon.receiveInput(event.target.id)) {
+      console.log("correct");
+    }
   }
 }
 
