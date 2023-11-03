@@ -7,7 +7,8 @@ window.addEventListener("load", () => {
 });
 
 function handleGameInit() {
-  refreshGame();
+  document.querySelector("button#game-start").innerText = `Reset`;
+  refreshGame(true);
   let simon = new SimonGame();
   handleSimonTurn(simon);
 }
@@ -23,27 +24,43 @@ function handleInput(event, simonObj) {
   let simon = simonObj;
   if (event.target.tagName === "INPUT") {
     buttonAction(event.target, false);
-    sleep(700).then(() => {
-      if (simon.receiveInput(event.target.id)) {
-      console.log("correct");
-        if (simon.checkInputComplete()) {
+    if (simon.receiveInput(event.target.id)) {
+    console.log("correct");
+      if (simon.checkInputComplete()) {
+        sleep(700).then(() => {
           console.log(`round complete!`);
-          refreshGame();
+          changeScore(false);
+          refreshGame(false);
           handleSimonTurn(simon);
-        }
-      } else {
-        console.log("game over");
-          refreshGame();
+        })
       }
-    })
+    } else {
+      changeScore(false)
+      refreshGame(true);
+    }
   }
 }
 
-function refreshGame() {
+function changeScore(gameOver) {
+  const highRound = document.querySelector(`span#high`);
+  const currentRound = document.querySelector(`span#current`);
+  if (parseInt(currentRound.innerText) > parseInt(highRound.innerText)) {
+    highRound.innerText = currentRound.innerText;
+  }
+  if (gameOver) {
+    currentRound.innerText = 0;
+  } else {
+    currentRound.innerText = parseInt(currentRound.innerText) + 1
+  }
+}
+
+function refreshGame(resetButtons) {
+  if (resetButtons) {
+    document.querySelectorAll("input[name='simon-btn']").forEach(btn => btn.checked = false);
+  }
   let toRefresh = document.querySelector("#game-buttons")
   const refreshedNode = toRefresh.cloneNode(true);
   toRefresh.parentNode.replaceChild(refreshedNode, toRefresh);
-  // document.querySelectorAll("input[name='simon-btn']").forEach(btn => btn.checked = false);
 }
 
 function handleSimonTurn(simonObj) {
