@@ -19,9 +19,8 @@ This site allows users to play the game Simon Says. Just press the start button 
 ## Setup/Installation Requirements
 
 * Clone repository
-* Navigate to the dist directory
-* Open index.html in your browser
-* I genuinely have no idea how I'm suppose walk anybody who wants to dev this through the process of using npm to install dependencies idk man just do it 
+* Using your favorite command line console, run `npm run build` (requires npm) in the top level directory
+* Navigate to the newly-generated scr directory and open index.html
 
 ## Known Bugs
 
