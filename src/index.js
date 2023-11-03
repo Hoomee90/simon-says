@@ -7,6 +7,7 @@ window.addEventListener("load", () => {
 });
 
 function handleGameInit() {
+  refreshGame();
   let simon = new SimonGame();
   handleSimonTurn(simon);
 }
@@ -22,22 +23,27 @@ function handleInput(event, simonObj) {
   let simon = simonObj;
   if (event.target.tagName === "INPUT") {
     buttonAction(event.target, false);
-    if (simon.receiveInput(event.target.id)) {
+    sleep(700).then(() => {
+      if (simon.receiveInput(event.target.id)) {
       console.log("correct");
-      if (simon.checkInputComplete()) {
-        console.log(`round complete!`);
-        let toRefresh = document.querySelector("#game-buttons")
-        const refreshedNode = toRefresh.cloneNode(true);
-        toRefresh.parentNode.replaceChild(refreshedNode, toRefresh);
-        handleSimonTurn(simon);
+        if (simon.checkInputComplete()) {
+          console.log(`round complete!`);
+          refreshGame();
+          handleSimonTurn(simon);
+        }
+      } else {
+        console.log("game over");
+          refreshGame();
       }
-    } else {
-      console.log("game over");
-      let toRefresh = document.querySelector("#game-buttons")
-      const refreshedNode = toRefresh.cloneNode(true);
-      toRefresh.parentNode.replaceChild(refreshedNode, toRefresh);
-    }
+    })
   }
+}
+
+function refreshGame() {
+  let toRefresh = document.querySelector("#game-buttons")
+  const refreshedNode = toRefresh.cloneNode(true);
+  toRefresh.parentNode.replaceChild(refreshedNode, toRefresh);
+  // document.querySelectorAll("input[name='simon-btn']").forEach(btn => btn.checked = false);
 }
 
 function handleSimonTurn(simonObj) {
