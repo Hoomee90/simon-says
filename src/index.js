@@ -3,12 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SimonGame from './simon';
 
 window.addEventListener("load", () => {
-  const startButton = document.querySelector("button#game-start");
-  startButton.addEventListener("click", () => handleGameInit(startButton));
+  document.querySelector("button#game-start").addEventListener("click", handleGameInit);
 });
 
-function handleGameInit(startButton) {
-  startButton.innerText = `Reset`;
+function handleGameInit(event) {
+  event.target.innerText = `Reset`;
   refreshRound(true);
   let simon = new SimonGame();
   handleSimonTurn(simon);
@@ -61,7 +60,7 @@ function refreshRound(gameOver) {
       btn.toggleAttribute("disabled");
     });
   }
-  let toRefresh = document.querySelector("#game-buttons")
+  let toRefresh = document.querySelector("#game-buttons");
   const refreshedNode = toRefresh.cloneNode(true);
   toRefresh.parentNode.replaceChild(refreshedNode, toRefresh);
 }
