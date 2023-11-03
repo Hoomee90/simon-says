@@ -10,7 +10,8 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   devServer: {
-    static: './dist'
+    static: './dist',
+    hot: true
   },
   devtool: 'eval-source-map',
   plugins: [
