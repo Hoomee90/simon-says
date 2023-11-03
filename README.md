@@ -20,7 +20,7 @@ This site allows users to play the game Simon Says. Just press the start button 
 
 * Clone repository
 * Using your favorite command line console, run `npm run build` (requires npm) in the top level directory
-* Navigate to the newly-generated scr directory and open index.html
+* Navigate to the newly-generated src directory and open index.html
 
 ## Known Bugs
 
