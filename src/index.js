@@ -3,12 +3,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SimonGame from './simon';
 
 window.addEventListener("load", () => {
-  document.querySelector("button#game-start").addEventListener("click", handleGameInit);
+  const startButton = document.querySelector("button#game-start");
+  startButton.addEventListener("click", () => handleGameInit(startButton));
 });
 
-function handleGameInit() {
-  document.querySelector("button#game-start").innerText = `Reset`;
-  refreshGame(true);
+function handleGameInit(startButton) {
+  startButton.innerText = `Reset`;
+  refreshRound(true);
   let simon = new SimonGame();
   handleSimonTurn(simon);
 }
@@ -25,18 +26,16 @@ function handleInput(event, simonObj) {
   if (event.target.tagName === "INPUT") {
     buttonAction(event.target, false);
     if (simon.receiveInput(event.target.id)) {
-    console.log("correct");
       if (simon.checkInputComplete()) {
         sleep(700).then(() => {
-          console.log(`round complete!`);
           changeScore(false);
-          refreshGame(false);
+          refreshRound(false);
           handleSimonTurn(simon);
         })
       }
     } else {
-      changeScore(false)
-      refreshGame(true);
+      changeScore(true);
+      refreshRound(true);
     }
   }
 }
@@ -44,19 +43,23 @@ function handleInput(event, simonObj) {
 function changeScore(gameOver) {
   const highRound = document.querySelector(`span#high`);
   const currentRound = document.querySelector(`span#current`);
+  if (gameOver) {
+    currentRound.innerText = 1;
+  } else {
+    currentRound.innerText = parseInt(currentRound.innerText) + 1;
+  }
   if (parseInt(currentRound.innerText) > parseInt(highRound.innerText)) {
     highRound.innerText = currentRound.innerText;
   }
-  if (gameOver) {
-    currentRound.innerText = 0;
-  } else {
-    currentRound.innerText = parseInt(currentRound.innerText) + 1
-  }
 }
 
-function refreshGame(resetButtons) {
-  if (resetButtons) {
-    document.querySelectorAll("input[name='simon-btn']").forEach(btn => btn.checked = false);
+function refreshRound(gameOver) {
+  if (gameOver) {
+    document.querySelector("button#game-start").toggleAttribute(`disabled`);
+    document.querySelectorAll("input[name='simon-btn']").forEach(btn => {
+      btn.checked = false
+      btn.toggleAttribute("disabled");
+    });
   }
   let toRefresh = document.querySelector("#game-buttons")
   const refreshedNode = toRefresh.cloneNode(true);
