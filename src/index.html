@@ -5,8 +5,8 @@
 </head>
 <body class="container">
   <h1>Play the game</h1>
-  <button id="game-start" class="btn btn-secondary">Start</button>
-  <div id="game-buttons" class="btn-group-vertical w-50">
+  <button id="game-start" class="mb-4 w-25 btn btn-lg btn-primary">Start</button>
+  <div id="game-buttons" class="btn-group-vertical d-block mx-auto">
     <div class="btn-group">
       <input type="checkbox" class="btn-check" name="simon-btn" id="red">
       <label class="btn btn-outline-danger" for="red">O</label>
@@ -21,6 +21,10 @@
       <input type="checkbox" class="btn-check" name="simon-btn" id="blue">
       <label class="btn btn-outline-primary" for="blue">O</label>
     </div>
+  </div>
+  <div class="mt-3 card bg-secondary text-light">
+    <h3 id="high" class="card-header">Highest Round:</h3>
+    <h3 id="current" class="card-header">Current Round:</h3>
   </div>
 </body>
 </html>
